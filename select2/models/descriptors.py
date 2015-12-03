@@ -1,11 +1,10 @@
 import django
 from django.db import router
 from django.db.models import signals
-from distutils.version import StrictVersion
-if StrictVersion(django.get_version()) >= StrictVersion('1.9.0'):
-	from django.db.models.fields.related import ManyToManyDescriptor as ReverseManyRelatedObjectsDescriptor
-else:
+try:
     from django.db.models.fields.related import ReverseManyRelatedObjectsDescriptor
+except ImportError:
+	from django.db.models.fields.related import ManyToManyDescriptor as ReverseManyRelatedObjectsDescriptor
 from ..utils import cached_property
 
 
